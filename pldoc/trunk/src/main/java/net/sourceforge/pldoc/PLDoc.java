@@ -388,6 +388,7 @@ public class PLDoc
 		   if (settings.isVerbose() ) System.out.println("Using \"" + sqlStatement + "\"" );
 
 		   if (settings.isVerbose() ) System.out.println("Connecting ..");
+		   System.err.println("@TODO DbUrl=" + settings.getDbUrl()+", dbUser=\""+  settings.getDbUser()+"\", dbPassword=\""+  settings.getDbPassword() + "\"" );
            conn = DriverManager.getConnection( settings.getDbUrl(), settings.getDbUser(), settings.getDbPassword() );
 		   if (settings.isVerbose() ) System.out.println("Connected");
 

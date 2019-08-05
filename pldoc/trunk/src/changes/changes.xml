@@ -7,6 +7,10 @@
         <author email="altumano at users.sourceforge.net">Albert Tumanov</author>
     </properties>
     <body>
+        <release version="1.5.22" date="2019-08-05"  description="Minor Fixes" >
+		<action type="fix" dev="sturton" >Valid external PROCEDURE and FUNCTION specification may be "EXTERNAL LANGUAGE"</action>
+		<action type="update" dev="sturton" >Support UDF pragma</action>
+        </release>
         <release version="1.5.21" date="2018-01-01"  description="Minor Fixes" >
 		<action type="fix" dev="sturton" issue="111" due-to="Torsten Kleiber" due-to-email="tkleiber@sourceforge.net" >PLDoc 1.5.19 cannot work with german umlauts and ß (esszet) characters</action>
         </release>

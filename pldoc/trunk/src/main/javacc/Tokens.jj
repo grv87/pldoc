@@ -324,6 +324,7 @@ TOKEN [IGNORE_CASE]:
 <TRIGGER: "TRIGGER"> |
 <TRUE: "TRUE"> |
 <TYPE: "TYPE"> |
+<UDF: "UDF"> |
 <UI: "UI"> |
 <UNDER: "UNDER"> |
 <UNIQUE: "UNIQUE"> | //SRT 2011-04-17
@@ -1998,6 +1999,7 @@ Token qualifiedID(): {}
 		| <RESTRICT_REFERENCES>
 		| <EXCEPTION_INIT>
 		| <AUTONOMOUS_TRANSACTION>
+                | <UDF>
 		// | <LANGUAGE>
 		//<ALL>
 		//<ALTER>
