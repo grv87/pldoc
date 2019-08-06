@@ -1045,7 +1045,7 @@ void skip2NextTerminator(String initiator,String terminator) :
   Token t = getToken(1);
   int count = (initiator == null) ? 0 : 1;
   if(t.image.equals(initiator)) count++;
-  while (count > 0 || !t.image.equals(terminator))
+  while ((count > 0 || !t.image.equals(terminator))  && t.kind != EOF)
   {
     t = getNextToken();
     t = getToken(1);
@@ -1790,12 +1790,13 @@ String TrimExpression() :
 /*
 TREAT ( Expression AS datatype)
 CAST ( Expression AS datatype)
+(Expression AS datatype)
 */
 String ObjectExpression() :
 { Token thisToken;  String string = null; StringBuffer sb = new StringBuffer() ; }
 {
   (
-	(thisToken = <CAST> | thisToken = <TREAT> ) { sb.append(thisToken.image);} 
+	[ (thisToken = <CAST> | thisToken = <TREAT> ) { sb.append(thisToken.image);} ]
 	"(" { sb.append("(");} 
 	( string = Expression() { sb.append(" "); sb.append(string); }  )
 	[
@@ -1839,6 +1840,26 @@ String ConditionalAndExpression() :
  }
 }
 
+String IsOfExpression():
+{ String string = null; StringBuffer sb = new StringBuffer(); }
+{
+  // IS [NOT] OF [TYPE] (objectType1 [, objectType2]*)
+  (
+    <IS> { sb.append(" IS"); }
+    [ <NOT> { sb.append(" NOT"); } ]
+    <OF> { sb.append(" OF"); }
+    [<TYPE> { sb.append(" TYPE"); } ]
+    "(" { sb.append(" ("); }
+    string = datatype() { sb.append(string); }
+    ("," string = datatype() { sb.append(", "); sb.append(string); } )*
+    ")" { sb.append(")"); }
+  )
+  {
+    return sb.toString();
+  }
+}
+
+
 String EqualityExpression() :
 { String string = null; StringBuffer sb = new StringBuffer() ; }
 {
@@ -1847,15 +1868,26 @@ String EqualityExpression() :
 	  (
 	   string = RelationalExpression() 
 	  ) {sb.append(string);} 
+
 	  ( 
-	   ( ("=" ) {sb.append(" = ");}
-	   | ("!" "=" ) {sb.append(" != ");}
-	   // Now unde RelationalExpression | ("<" ">" ) {sb.append(" <> ");}
-	   | (<IS>) {sb.append(" IS ");}  
-           )
-	   (
-	   string = RelationalExpression() 
-	   ) {sb.append(string);} 
+	
+	      /*
+	       * IsOfExpression could be integrated into ObjectExpression as well, but then the grammar would allow this: "myVar := OF (myType)" which is obviously
+	       * wrong. Lookahead is needed here to choose between "IS [NOT] OF (objectType)" and e.g. "IS [NOT] NULL".
+	       */
+	      LOOKAHEAD(IsOfExpression()) ( string = IsOfExpression() { sb.append(string); } )
+	      |
+
+		  ( 
+		   ( ("=" ) {sb.append(" = ");}
+		   | ("!" "=" ) {sb.append(" != ");}
+		   // Now unde RelationalExpression | ("<" ">" ) {sb.append(" <> ");}
+		   | (<IS>) {sb.append(" IS ");}  
+	           )
+		   (
+		   string = RelationalExpression() 
+		   ) {sb.append(string);} 
+		  )
 	  )*
   )
  { 

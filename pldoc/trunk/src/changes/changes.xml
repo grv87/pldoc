@@ -7,6 +7,13 @@
         <author email="altumano at users.sourceforge.net">Albert Tumanov</author>
     </properties>
     <body>
+        <release version="1.5.24" date="2019-08-06"  description="Honza Bažant Fixes" >
+		<action type="fix" issue="112" dev="sturton" due-to="Honza Bažant" due-to-email="honzabazant@sourceforge.net" >Pass specified -user parameter value into VIEW definitions</action>
+		<action type="fix" issue="112" dev="sturton" due-to="Honza Bažant" due-to-email="honzabazant@sourceforge.net" >Parse VIEW definitions terminated with a semi-colon</action>
+		<action type="fix" issue="112" dev="sturton" due-to="Honza Bažant" due-to-email="honzabazant@sourceforge.net" >Terminate skipping to end of statement on reaching end of file</action>
+		<action type="add" issue="112" dev="sturton" due-to="Honza Bažant" due-to-email="honzabazant@sourceforge.net" >Support "IS [ NOT ] OF TYPE" test </action>
+		<action type="add" issue="112" dev="sturton" due-to="Honza Bažant" due-to-email="honzabazant@sourceforge.net" >Support UPCAST/DOWNCAST expressions</action>
+        </release>
         <release version="1.5.23" date="2019-08-06"  description="Minor Fixes" >
 		<action type="fix" dev="sturton" >Correct links in index-list to PACKAGE_BODY methods</action>
         </release>
