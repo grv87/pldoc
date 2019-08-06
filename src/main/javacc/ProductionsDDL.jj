@@ -13,7 +13,7 @@ void table() throws SAXException :
   tokenCreate=<CREATE> [<GLOBAL> <TEMPORARY>]
   tokenTable=<TABLE> (LOOKAHEAD(2) schema=ID()".")? name=ID()
   {
-    String schemaString = "";
+    String schemaString = schemaName;
     if (schema != null) {
       schemaString = schema.toString();
     }
@@ -57,7 +57,7 @@ void view() throws SAXException :
   [[<NO>] <FORCE>]
   tokenView=<VIEW> (LOOKAHEAD(2) schema=ID()".")? name=ID()
   {
-    String schemaString = "";
+    String schemaString = schemaName;
     if (schema != null) {
       schemaString = schema.toString();
     }
@@ -71,7 +71,7 @@ void view() throws SAXException :
   <AS>
   statement() //SRT select()
   //### WITH ...
-  (";" | "/")
+  ("/")? // Any semicolon is included in statement() above 
   { m_out.endElement("VIEW"); }
 }
 
