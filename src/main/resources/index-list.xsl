@@ -239,7 +239,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 					<!-- create link referrer -->
 					<xsl:variable name="referrer">
 					      <xsl:value-of select="concat($hrefSchema, '/','_') "/>
-					      <xsl:value-of select="$hrefMethod"/>
+					      <xsl:value-of select="$hrefObject"/>
    					      <xsl:value-of select="'_body.html#'"/>
 						<xsl:value-of select="$hrefMethod" />
 						       <xsl:if test="ARGUMENT">
